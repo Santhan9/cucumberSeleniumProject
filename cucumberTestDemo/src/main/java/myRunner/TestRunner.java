@@ -5,7 +5,9 @@ import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
  
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "C:\\Users\\Santhan\\eclipse-workspace\\cucumberTestDemo\\src\\main\\java\\Feature",glue={"stepDefinition"}
+@CucumberOptions(features = "C:\\Users\\Santhan\\eclipse-workspace\\cucumberTestDemo\\src\\main\\java\\Feature",
+glue={"stepDefinition"},
+tags= {"@tag1"}
  )
  
 public class TestRunner {
