@@ -3,6 +3,9 @@ package stepDefinition;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import PageClasses.homePage;
+import PageClasses.signinPage;
+import Utils.commonMethod;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.*;
 import junit.framework.Assert;
@@ -11,47 +14,40 @@ public class stepClass {
 	
 	public WebDriver driver;
 	
-	@Given("^I open the browser$")
-	public void test1()  {
-		System.setProperty("webdriver.chrome.driver", "C:\\Users\\Santhan\\Desktop\\seleniumtraining1\\chromedriver_win32\\chromedriver.exe");
-		this.driver = new ChromeDriver();
-		
-	}
-
-	@When("^I enter google url$")
-	public void i_enter_google_url()  {
-		this.driver.get("https://www.google.com/");
-	}
+	public commonMethod cm;
 	
-
-@When("^I enter google url \"([^\"]*)\"$")
-public void i_enter_google_url(String url) throws Throwable {
-    
-	this.driver.get(url);
-}
-
-@When("^I enter UserName \"([^\"]*)\" password \"([^\"]*)\"$")
-public void i_enter_UserName_password(String userName, String Password) throws Throwable {
-    // Write code here that turns the phrase above into concrete actions
-    throw new PendingException();
-}
-
+	public homePage hp ;
+	public signinPage sp;
 	
-	@When("^I enter Amazon url$")
-	public void i_enter_amazon_url()  {
-		this.driver.get("https://www.google.com/");
+	@Given("^I open URL \"([^\"]*)\"$")
+	public void i_open_URL(String url) throws Throwable {
+	    cm = new commonMethod();
+	    cm.openURL(url);
+	   cm.maximise();
+	   // cm.takeSnapShot(this.driver,"C:\\Users\\Santhan\\git\\repository7\\cucumberTestDemo\\target\\failed.png");
 	}
 
-	@Then("^Amazon site opens$")
-	public void amazon_site_opens()  {
-	   String title = this.driver.getTitle();
-	   Assert.assertEquals("Google", title);
+	@When("^User Navigate to signin Page$")
+	public void user_Navigate_to_signin_Page() throws Throwable {
+		this.driver = cm.getDriver();
+	    hp = new homePage(this.driver);
+	    
+	    hp.clickSignInBtn();
+	    cm.wait(4);
 	}
-	
-	@Then("^Google site opens$")
-	public void google_site_opens()  {
-	   String title = this.driver.getTitle();
-	   Assert.assertEquals("Google", title);
+
+	@When("^User enters \"([^\"]*)\" and \"([^\"]*)\"$")
+	public void user_enters_and(String email, String password) throws Throwable {
+	    sp = new signinPage(this.driver);
+	    sp.enterEmailText(email);
+	    sp.clickSignInBtn();
+	    sp.enterPasswordText(password);
+	    sp.clickSignInBtn();
+	}
+
+	@Then("^Message displayed Login Successfully$")
+	public void message_displayed_Login_Successfully() throws Throwable {
+	    sp.verifyMessage("To better protect your account, please re-enter your password and then enter the characters as they are shown in the image below.");
 	}
 	
 	
