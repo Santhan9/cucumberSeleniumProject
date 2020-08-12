@@ -9,6 +9,7 @@ import Utils.commonMethod;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.*;
 import junit.framework.Assert;
+import io.restassured.*;
 
 public class stepClass {
 	
@@ -21,6 +22,7 @@ public class stepClass {
 	
 	@Given("^I open URL \"([^\"]*)\"$")
 	public void i_open_URL(String url) throws Throwable {
+		RestAssured.baseURI ="";
 	    cm = new commonMethod();
 	    cm.openURL(url);
 	   cm.maximise();
